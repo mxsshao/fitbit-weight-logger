@@ -1,3 +1,21 @@
-<svg>
-  <rect id="background" />
+<svg id="background">
+<text x="50%" y="20"
+        font-family="System-Regular" fill="white"
+        font-size="30" font-weight="bold"
+        text-anchor="middle">Last Recorded:</text>
+        <text x="50%" y="50"
+        font-family="System-Regular" fill="white"
+        font-size="30" font-weight="bold"
+        text-anchor="middle">10 Jan 2018</text>
+        <text x="50%" y="100"
+        font-family="System-Regular" fill="white"
+        font-size="40" font-weight="bold"
+        text-anchor="middle">50.0 kg</text>
+        <text x="50%" y="140"
+        font-family="System-Regular" fill="white"
+        font-size="40" font-weight="bold"
+        text-anchor="middle">26% fat</text>
+  <use id="mybutton" href="#square-button" y="226" fill="fb-green">
+    <set href="#text" attributeName="text-buffer" to="Log Weight" />
+  </use>
 </svg>
