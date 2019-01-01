@@ -3,7 +3,7 @@ import { settingsStorage } from "settings";
 import { debug } from "../common/log.js";
 
 import Fitbit from "./fitbit";
-import { sendVal } from "./communication";
+import {sendVal} from "./communication"
 
 const fetchAndSendWeight = () => {
   const fitbit = getFitbitInstance();
@@ -16,8 +16,7 @@ const fetchAndSendWeight = () => {
     if (lastEntry) {
       sendVal({
         key: "LATEST_ENTRY",
-        value: lastEntry.weight,
-        date: lastEntry.date
+        value: lastEntry
       });
     }
   });
@@ -32,7 +31,7 @@ const getFitbitInstance = () => {
   }
 
   const oauthDataParsed = JSON.parse(oauthData);
-  return new Fitbit(oauthDataParsed, unit);
+  return new Fitbit(oauthDataParsed);
 };
 
 const postWeightTodayAndSendResponseToApp = weightToday => {

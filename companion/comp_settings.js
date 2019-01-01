@@ -4,12 +4,12 @@ import { debug } from "../common/log.js";
 
 import {
   fetchAndSendWeight,
-} from "data";
+} from "./data";
 
 const initSettings = () => {
   // A user changes settings
   settingsStorage.onchange = evt => {
-    debug(`Settings changed: ${JSON.stringify(evt, undefined, 2)}`);
+    debug(`Settings changed: ${JSON.stringify(evt)}`);
 
     if (evt.key === "oauth") {
       fetchAndSendWeight();

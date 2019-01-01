@@ -1,14 +1,17 @@
-import secrets from "../secrets.json";
+import * as secrets from "../secrets";
 
 import { getDateString } from "../common/utils.js";
 import { b64EncodeUnicode } from "../common/base64.js";
 
 import { updateOauthSettings } from "./comp_settings";
-import { sendVal } from "communication";
+import { sendVal } from "./communication";
+
+import { debug } from "../common/log.js";
 
 const URL_BASE = "https://api.fitbit.com/1";
 const LOGGED_IN_USER = "-";
 const WEIGHT_URL = `${URL_BASE}/user/${LOGGED_IN_USER}/body/log/weight`;
+const FAT_URL = `${URL_BASE}/user/${LOGGED_IN_USER}/body/log/fat`;
 
 const MAX_RETRIES = 3;
 
@@ -34,10 +37,17 @@ class Fitbit {
     return this.getUrl(`${WEIGHT_URL}/date/${getDateString(date)}.json`);
   }
 
+  // Actually last month
   getLastSevenDays() {
     return this.getUrl(
-      `${WEIGHT_URL}/date/${getDateString(new Date())}/7d.json`
+      `${WEIGHT_URL}/date/${getDateString(new Date())}/1m.json`
     );
+  }
+
+  getBodyFat(date_string) {
+    return this.getUrl(
+        `${FAT_URL}/date/${date_string}.json`
+      );
   }
 
   getLastEntry() {
@@ -46,10 +56,27 @@ class Fitbit {
         return null;
       }
 
-      const sortedEntries = sortEntriesByDate(entriesLastSevenDays.weight);
+      let sortedEntries = sortEntriesByDate(entriesLastSevenDays.weight);
 
       if (sortedEntries.length > 0) {
-        return sortedEntries[0];
+        let weight = sortedEntries[0];
+        let body_fat = this.getBodyFat(weight.date).then(fat_entry => {
+            if (!fat_entry) {
+                return null;
+            }
+            return fat_entry[fat_entry.length];
+        });
+        if (body_fat) {
+            return {
+                "date": weight.date,
+                "weight": weight.weight,
+                "body_fat": body_fat.fat
+            };
+        }
+        return {
+            "date": weight.date,
+            "weight": weight.weight
+        };
       }
 
       return null;
@@ -167,9 +194,9 @@ class Fitbit {
   }
 
   refreshTokens() {
-    const url = secrets.oauth.tokenRequestUrl;
-    const username = secrets.oauth.clientId;
-    const password = secrets.oauth.clientSecret;
+    const url = secrets.REQUESTURL;
+    const username = secrets.CLIENTID;
+    const password = secrets.CLIENTSECRET;
     const b64Auth = "Basic " + b64EncodeUnicode(`${username}:${password}`);
     const refresh_token = this.oauthData.refresh_token;
     const formBody = `grant_type=refresh_token&refresh_token=${refresh_token}`;
