@@ -60,23 +60,26 @@ class Fitbit {
 
       if (sortedEntries.length > 0) {
         let weight = sortedEntries[0];
-        let body_fat = this.getBodyFat(weight.date).then(fat_entry => {
+        return this.getBodyFat(weight.date).then(fat_entry => {
             if (!fat_entry) {
-                return null;
+                return {
+                    "date": weight.date,
+                    "weight": weight.weight
+                }
             }
-            return fat_entry[fat_entry.length];
-        });
-        if (body_fat) {
+            let body_fat = fat_entry.fat[fat_entry.fat.length - 1];
+            if (body_fat) {
+                return {
+                    "date": weight.date,
+                    "weight": weight.weight,
+                    "body_fat": body_fat.fat
+                };
+            }
             return {
                 "date": weight.date,
-                "weight": weight.weight,
-                "body_fat": body_fat.fat
-            };
-        }
-        return {
-            "date": weight.date,
-            "weight": weight.weight
-        };
+                "weight": weight.weight
+            }
+        });
       }
 
       return null;

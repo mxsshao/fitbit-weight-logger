@@ -15,4 +15,9 @@ const setNoDecimals = (number, noOfDecimals, roundMethod) => {
   );
 };
 
+export function getMonthName(index) {
+  let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return months[index];
+}
+
 export { padNumber, getDateString, setNoDecimals };
