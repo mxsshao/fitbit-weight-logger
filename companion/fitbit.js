@@ -77,18 +77,7 @@ class Fitbit {
 
   postWeight(date, value) {
     const url = `${WEIGHT_URL}.json`;
-    const body = `weight=${value}&date=${getDateString(date)}`;
-
-    return this.postUrl(url, body);
-  }
-
-  postFatToday(value) {
-    return this.postFat(new Date(), value);
-  }
-
-  postFat(date, value) {
-    const url = `${FAT_URL}.json`;
-    const body = `fat=${value}&date=${getDateString(date)}`;
+    const body = `weight=${value.weight}&fat=${value.body_fat}&date=${getDateString(date)}`;
 
     return this.postUrl(url, body);
   }

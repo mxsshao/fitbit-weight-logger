@@ -38,33 +38,17 @@ const postWeightTodayAndSendResponseToApp = value => {
   let fitbit = getFitbitInstance();
 
   if (value.weight) {
-    fitbit.postWeightToday(value.weight).then(response_weight => {
-      if (value.body_fat) {
-        fitbit.postFatToday(value.body_fat).then(response_fat => {
-          let log_weight = response_weight.weightLog;
-          let log_fat = response_fat.fatLog;
-          if (log_weight && log_fat) {
-            sendVal({
-              key: "LOG_RESPONSE",
-              value: {
-                "date": log_weight.date,
-                "weight": log_weight.weight,
-                "body_fat": log_fat.fat
-              }
-            });
+    fitbit.postWeightToday(value).then(response_weight => {
+      let log = response_weight.weightLog;
+      if (log) {
+        sendVal({
+          key: "LOG_RESPONSE",
+          value: {
+            "date": log.date,
+            "weight": log.weight,
+            "body_fat": log.fat
           }
-        })
-      } else {
-        let log = response_weight.weightLog;
-        if (log) {
-          sendVal({
-            key: "LOG_RESPONSE",
-            value: {
-              "date": log.date,
-              "weight": log.weight
-            }
-          });
-        }
+        });
       }
     });
   }
