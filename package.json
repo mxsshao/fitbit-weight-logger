@@ -10,7 +10,7 @@
   "fitbit": {
     "appUUID": "087e7947-bf3d-429a-abf6-694a7dbdc060",
     "appType": "app",
-    "appDisplayName": "Weight Logger",
+    "appDisplayName": "Weight",
     "iconFile": "resources/icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [],

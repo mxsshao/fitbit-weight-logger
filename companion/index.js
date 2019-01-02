@@ -26,7 +26,7 @@ import {
       if (evt.data.key === "WEIGHT_LOGGED_TODAY") {
         postWeightTodayAndSendResponseToApp(evt.data.value);
       } else if (evt.data.key === "REQUEST_LATEST_ENTRY") {
-        fetchAndSendLastEntry();
+        fetchAndSendWeight();
       }
     };
   

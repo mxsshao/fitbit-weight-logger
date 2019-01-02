@@ -11,4 +11,56 @@
   fill: black;
 }
 
-.my-item { font-size: 120; font-family: Seville-Book; fill: white; x: 5; y: 117; }
+.tumbler_item_kg_1 {
+  font-size: 100;
+  font-family: System-Light;
+  text-anchor: end;
+  x: "50%+10";
+}
+#tumbler_label_kg_1 {
+  fill: fb-slate;
+  font-size: 100;
+  font-family: System-Light;
+  y: "50%+38";
+  x: "50%+20";
+  text-anchor: middle;
+}
+#tumbler_label_kg_2 {
+  fill: fb-slate;
+  font-size: 50;
+  font-family: System-Light;
+  y: "50%+38";
+  x: "50%+84";
+  text-anchor: start;
+}
+.tumbler_item_kg_2 {
+  font-size: 100;
+  font-family: System-Light;
+}
+
+.tumbler_item_fat_1 {
+  font-size: 100;
+  font-family: System-Light;
+  text-anchor: end;
+  x: "50%+10";
+}
+#tumbler_label_fat_1 {
+  fill: fb-slate;
+  font-size: 100;
+  font-family: System-Light;
+  y: "50%+38";
+  x: "50%+20";
+  text-anchor: middle;
+}
+#tumbler_label_fat_2 {
+  fill: fb-slate;
+  font-size: 50;
+  font-family: System-Light;
+  y: "50%+38";
+  x: "50%+84";
+  text-anchor: start;
+}
+.tumbler_item_fat_2 {
+  font-size: 100;
+  font-family: System-Light;
+}
