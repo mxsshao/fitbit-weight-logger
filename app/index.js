@@ -4,16 +4,18 @@ import * as messaging from "messaging";
 import { debug, error } from "../common/log.js";
 import { getMonthName } from "../common/utils.js";
 import { me } from "appbit";
+import {sendVal} from "./communication"
 
 const back_main = document.getElementById("back_main");
-const back_log = document.getElementById("back_log");
 const label_last_recorded = document.getElementById("label_last_recorded");
 const label_weight = document.getElementById("label_weight");
 const label_fat = document.getElementById("label_fat");
-
 const btn_log = document.getElementById("btn_log");
+
+const back_log = document.getElementById("back_log");
 const btn_new_weight = document.getElementById("btn_new_weight");
 const btn_new_fat = document.getElementById("btn_new_fat");
+const btn_save = document.getElementById("btn_save");
 
 const back_weight = document.getElementById("back_weight");
 const tumbler_kg_1 = document.getElementById("tumbler_kg_1");
@@ -151,6 +153,15 @@ function setClearFat() {
 };
 btn_log.addEventListener("click", () => {
     screenLog(true);
+});
+btn_save.addEventListener("click", () => {
+    sendVal({
+        key: "WEIGHT_LOGGED_TODAY",
+        value: {
+            "weight": new_weight,
+            "body_fat": new_body_fat
+        }
+    });
 });
 btn_new_weight.addEventListener("click", () => {
     screenWeight();

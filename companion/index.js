@@ -21,12 +21,8 @@ import {
   
     // Message is received
     messaging.peerSocket.onmessage = evt => {
-      debug(`Companion received: ${JSON.stringify(evt, undefined, 2)}`);
-  
       if (evt.data.key === "WEIGHT_LOGGED_TODAY") {
         postWeightTodayAndSendResponseToApp(evt.data.value);
-      } else if (evt.data.key === "REQUEST_LATEST_ENTRY") {
-        fetchAndSendWeight();
       }
     };
   

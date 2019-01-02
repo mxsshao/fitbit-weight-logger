@@ -27,7 +27,7 @@
   <use id="btn_new_fat" href="#square-button" x="50" y="136" width="200" fill="#505050">
     <set href="#text" attributeName="text-length" to="9" />
   </use>
-  <use id="btn_log" href="#square-button" y="225" fill="fb-green">
+  <use id="btn_save" href="#square-button" y="225" fill="fb-green">
     <set href="#text" attributeName="text-buffer" to="Save" />
   </use>
 </svg>

@@ -3,7 +3,7 @@ import { settingsStorage } from "settings";
 import { debug } from "../common/log.js";
 
 import Fitbit from "./fitbit";
-import {sendVal} from "./communication"
+import { sendVal } from "./communication"
 
 const fetchAndSendWeight = () => {
   const fitbit = getFitbitInstance();
@@ -34,19 +34,40 @@ const getFitbitInstance = () => {
   return new Fitbit(oauthDataParsed);
 };
 
-const postWeightTodayAndSendResponseToApp = weightToday => {
+const postWeightTodayAndSendResponseToApp = value => {
   const fitbit = getFitbitInstance();
 
-  fitbit.postWeightToday(weightToday).then(jsonData => {
-    const entry = jsonData.weightLog;
-
-    sendVal({
-      key: "WEIGHT_TODAY",
-      date: entry.date,
-      value: entry.weight,
-      bmi: entry.bmi
+  if (value.weight) {
+    fitbit.postWeightToday(value.weight).then(response_weight => {
+      if (value.body_fat) {
+        fitbit.postFatToday(value.body_fat).then(response_fat => {
+          let log_weight = response_weight.weightLog;
+          let log_fat = response_fat.fatLog;
+          if (log_weight && log_fat) {
+            sendVal({
+              key: "LOG_RESPONSE",
+              value: {
+                "date": log_weight.date,
+                "weight": log_weight.weight,
+                "body_fat": log_fat.fat
+              }
+            });
+          }
+        })
+      } else {
+        let log = response_weight.weightLog;
+        if (log) {
+          sendVal({
+            key: "LOG_RESPONSE",
+            value: {
+              "date": log.date,
+              "weight": log.weight
+            }
+          });
+        }
+      }
     });
-  });
+  }
 };
 
 export {
