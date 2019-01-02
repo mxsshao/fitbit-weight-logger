@@ -30,3 +30,11 @@ import {
     messaging.peerSocket.onerror = err => {
       error("Connection error: " + err.code + " - " + err.message);
     };
+
+    settingsStorage.onchange = evt => {
+      debug(`Settings changed: ${JSON.stringify(evt)}`);
+  
+      if (evt.key === "oauth") {
+        fetchAndSendWeight();
+      }
+    };

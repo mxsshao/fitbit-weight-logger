@@ -13,7 +13,7 @@ const generateSettings = props => (
           if (props.settingsStorage.getItem("oauth")) {
             return "Authenticated";
           } else {
-            return "Not authenticated";
+            return "Not Authenticated";
           }
         })()}
         authorizeUrl={secrets.AUTHURL}

@@ -6,7 +6,7 @@ import Fitbit from "./fitbit";
 import { sendVal } from "./communication"
 
 const fetchAndSendWeight = () => {
-  const fitbit = getFitbitInstance();
+  let fitbit = getFitbitInstance();
 
   if (!fitbit) {
     return;
@@ -23,19 +23,19 @@ const fetchAndSendWeight = () => {
 };
 
 const getFitbitInstance = () => {
-  const oauthData = settingsStorage.getItem("oauth");
+  let oauthData = settingsStorage.getItem("oauth");
 
   if (!oauthData) {
     debug("No Oauth data found");
     return null;
   }
 
-  const oauthDataParsed = JSON.parse(oauthData);
+  let oauthDataParsed = JSON.parse(oauthData);
   return new Fitbit(oauthDataParsed);
 };
 
 const postWeightTodayAndSendResponseToApp = value => {
-  const fitbit = getFitbitInstance();
+  let fitbit = getFitbitInstance();
 
   if (value.weight) {
     fitbit.postWeightToday(value.weight).then(response_weight => {

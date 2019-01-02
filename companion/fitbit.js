@@ -16,8 +16,8 @@ const FAT_URL = `${URL_BASE}/user/${LOGGED_IN_USER}/body/log/fat`;
 const MAX_RETRIES = 3;
 
 const sortEntriesByDate = entries => {
-  const sortedEntries = entries.sort((a, b) => {
-    return new Date(a.date);
+  let sortedEntries = entries.sort((a, b) => {
+    return b.logId - a.logId;
   });
 
   return sortedEntries;
@@ -57,29 +57,15 @@ class Fitbit {
       }
 
       let sortedEntries = sortEntriesByDate(entriesLastSevenDays.weight);
-
+      debug(JSON.stringify(sortedEntries))
       if (sortedEntries.length > 0) {
         let weight = sortedEntries[0];
-        return this.getBodyFat(weight.date).then(fat_entry => {
-            if (!fat_entry) {
-                return {
-                    "date": weight.date,
-                    "weight": weight.weight
-                }
-            }
-            let body_fat = fat_entry.fat[fat_entry.fat.length - 1];
-            if (body_fat) {
-                return {
-                    "date": weight.date,
-                    "weight": weight.weight,
-                    "body_fat": body_fat.fat
-                };
-            }
-            return {
-                "date": weight.date,
-                "weight": weight.weight
-            }
-        });
+
+        return {
+          "date": weight.date,
+          "weight": weight.weight,
+          "body_fat": weight.fat
+        };
       }
       return null;
     });
@@ -250,6 +236,10 @@ class Fitbit {
         return response;
       });
   }
+}
+
+function updateOauthSettings(oauthData) {
+  settingsStorage.setItem("oauth", JSON.stringify(oauthData));
 }
 
 export default Fitbit;
