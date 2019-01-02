@@ -91,14 +91,14 @@ function screenWeight() {
     state = "LOG_WEIGHT";
     let new_weight_1, new_weight_2;
     if (new_weight) {
-        new_weight_1 = Math.floor(new_weight);
+        new_weight_1 = Math.floor(new_weight) - 40;
         new_weight_2 = Math.round((new_weight % 1) * 10);
         if (new_weight_2 === 10) {
             new_weight_1 += 1;
             new_weight_2 = 0;
         }
-        if (new_weight_1 > 599) {
-            new_weight_1 = 599;
+        if (new_weight_1 > 259) {
+            new_weight_1 = 259;
         }
     } else {
         new_weight_1 = 60;
@@ -123,8 +123,8 @@ function screenFat() {
             new_body_fat_1 += 1;
             new_body_fat_2 = 0;
         }
-        if (new_body_fat_1 > 99) {
-            new_body_fat_1 = 99;
+        if (new_body_fat_1 > 40) {
+            new_body_fat_1 = 40;
         }
     } else {
         new_body_fat_1 = 16;
@@ -140,7 +140,7 @@ function screenFat() {
 }
 
 function setNewWeight() {
-    new_weight = tumbler_kg_1.value + tumbler_kg_2.value * 0.1;
+    new_weight = tumbler_kg_1.value + 40 + tumbler_kg_2.value * 0.1;
     screenLog(false);
 };
 function setNewFat() {
