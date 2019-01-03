@@ -208,7 +208,7 @@
     <set href="#bottom-padding" attributeName="display" to="none" />
   </use>
   <use id="btn_error" href="#square-button-negative" y="100%-77">
-    <set href="#text" attributeName="text-buffer" to="Exit" />
+    <set href="#text" attributeName="text-buffer" to="Close" />
   </use>
 </svg>
 </svg>

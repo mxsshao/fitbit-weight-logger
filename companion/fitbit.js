@@ -165,8 +165,8 @@ class Fitbit {
                   sendVal({
                     key: "ERROR",
                     value: {
-                      "header": "Connection Error",
-                      "text": "Unable to retrieve weight data."
+                      "header": "Authentication Error",
+                      "text": "Please check your login on the settings page."
                     }
                   });
                   this.retries = 0;
