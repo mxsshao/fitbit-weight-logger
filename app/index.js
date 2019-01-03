@@ -211,8 +211,8 @@ function submitLog() {
     sendVal({
         key: "WEIGHT_LOGGED_TODAY",
         value: {
-            "weight": new_weight.toFixed(1),
-            "body_fat": new_body_fat.toFixed(1),
+            "weight": +new_weight.toFixed(1),
+            "body_fat": (new_body_fat ? +new_body_fat.toFixed(1) : null),
             "unit": unit
         }
     });
