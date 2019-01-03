@@ -34,7 +34,7 @@ let weight, body_fat;
 let state = "MAIN";
 let new_weight, new_body_fat, new_weight_lower_bound;
 
-let unit, unit_text;
+let unit, unit_text = "";
 
 function screenMain() {
     state = "MAIN"
@@ -50,22 +50,23 @@ function screenLog(reset) {
 
     if (reset) {
         new_weight = weight;
+        if (new_weight == null) {
+            new_weight = (unit === "us" ? 150 : 70 );
+        }
         new_body_fat = body_fat;
+
+        new_weight_lower_bound = Math.floor(new_weight) - 30;
+        if (new_weight_lower_bound < 0) {
+            new_weight_lower_bound = 0;
+        }
+
+        for (let i = 0; i < tumbler_items_kg.length; i++) {
+            tumbler_items_kg[i].text = new_weight_lower_bound + i;
+        }
     }
 
-    if (new_weight == null) {
-        new_weight = (unit === "us" ? 150 : 70 );
-    }
     btn_new_weight.text = `${new_weight.toFixed(1)} ${unit_text}`;
-    new_weight_lower_bound = Math.floor(new_weight) - 30;
-    if (new_weight_lower_bound < 0) {
-        new_weight_lower_bound = 0;
-    }
-
-    for (let i = 0; i < tumbler_items_kg.length; i++) {
-        tumbler_items_kg[i].text = new_weight_lower_bound + i;
-    }
-
+    
     if (new_body_fat != null) {
         btn_new_fat.text = `${new_body_fat.toFixed(1)}% fat`;
     } else {
@@ -190,6 +191,9 @@ document.onkeypress = function(e) {
         } else if (state === "LOG_FAT") {
             btn_fat_submit.animate("mouseup");
             setNewFat();
+        } else if (state === "LOG") {
+            btn_save.animate("mouseup");
+            submitLog()
         }
     } else if (e.key === "up") {
         if (state === "LOG_FAT") {
@@ -205,6 +209,8 @@ document.onkeydown = function(e) {
             btn_weight_submit.animate("mousedown");
         } else if (state === "LOG_FAT") {
             btn_fat_submit.animate("mousedown");
+        } else if (state === "LOG") {
+            btn_save.animate("mousedown");
         }
     } else if (e.key === "up") {
         if (state === "LOG_FAT") {
@@ -221,7 +227,7 @@ function receiveValues(data) {
         weight = data.value.weight;
         body_fat = data.value.body_fat;
         
-        updateUnit(evt.data.value.unit);
+        updateUnit(data.value.unit);
     } else {
         label_last_recorded.text = `No Recent\nEntries Found`;
         weight = null;
@@ -245,6 +251,8 @@ function updateMainText() {
 messaging.peerSocket.onmessage = evt => {
     debug(`App received: ${JSON.stringify(evt)}`);
     if (evt.data.key === "LATEST_ENTRY") {
+        receiveValues(evt.data);
+    } else if (evt.data.key === "LOG_RESPONSE") {
         receiveValues(evt.data);
     }
 }

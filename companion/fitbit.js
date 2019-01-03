@@ -68,16 +68,16 @@ class Fitbit {
 
       let sortedEntries = sortEntriesByDate(entriesLastSevenDays.weight);
       debug(JSON.stringify(sortedEntries))
-      // if (sortedEntries.length > 0) {
-      //   let weight = sortedEntries[0];
+      if (sortedEntries.length > 0) {
+        let weight = sortedEntries[0];
 
-      //   return {
-      //     "date": weight.date,
-      //     "weight": weight.weight,
-      //     "body_fat": weight.fat,
-      //     "unit": this.unit
-      //   };
-      // }
+        return {
+          "date": weight.date,
+          "weight": weight.weight,
+          "body_fat": weight.fat,
+          "unit": this.unit
+        };
+      }
       return {
         "unit": this.unit
       };
@@ -89,8 +89,13 @@ class Fitbit {
   }
 
   postWeight(date, value) {
-    const url = `${WEIGHT_URL}.json`;
-    const body = `weight=${value.weight}&fat=${value.body_fat}&date=${getDateString(date)}`;
+    let url = `${WEIGHT_URL}.json`;
+    let body;
+    if (value.body_fat != null) {
+      body = `weight=${value.weight}&fat=${value.body_fat}&date=${getDateString(date)}`;
+    } else {
+      body = `weight=${value.weight}&date=${getDateString(date)}`;
+    }
 
     return this.postUrl(url, body);
   }

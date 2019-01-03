@@ -1,37 +1,42 @@
 <svg id="background">
 <svg id="back_main">
 <textarea id="label_last_recorded" x="0" y="10"
-        font-family="System-Regular" fill="fb-slate"
+        font-family="System-Regular" fill="fb-lavender"
         font-size="30" font-weight="bold"
-        text-anchor="middle" text-length="30">Last Recorded:</textarea>
+        text-anchor="middle" text-length="30">---</textarea>
 
         <text id="label_weight" x="50%" y="50%-9"
         font-family="System-Regular" fill="white"
-        font-size="42" font-weight="bold"
+        font-size="44" font-weight="bold"
         text-anchor="middle" text-length="10"></text>
         <text id="label_fat" x="50%" y="50%+37"
         font-family="System-Regular" fill="white"
-        font-size="42" font-weight="bold"
+        font-size="44" font-weight="bold"
         text-anchor="middle" text-length="10"></text>
-  <use id="btn_log" href="#square-button" y="100%-75" fill="fb-slate">
+  <use id="btn_log" href="#square-button" y="100%-77" fill="fb-slate">
     <set href="#text" attributeName="text-buffer" to="Log Weight" />
+    <set href="#text" attributeName="y" to="52" />
   </use>
 </svg>
 <svg id="back_log" display="none">
-  <use id="btn_new_weight" href="#square-button" x="50%-120" y="50%-110" width="240" height="80" fill="#505050">
+  <use id="btn_new_weight" href="#square-button" x="0" y="38%-88" height="88" fill="fb-dark-gray">
     <set href="#text" attributeName="text-length" to="10" />
-    <set href="#text" attributeName="font-size" to="50" />
+    <set href="#text" attributeName="font-size" to="58" />
+    <set href="#text" attributeName="y" to="68" />
   </use>
-  <use id="btn_new_fat" href="#square-button" x="50%-120" y="50%-30" width="240" height="80" fill="#505050">
+  <use id="btn_new_fat" href="#square-button" x="0" y="72%-88" height="88" fill="fb-dark-gray">
     <set href="#text" attributeName="text-length" to="10" />
-    <set href="#text" attributeName="font-size" to="50" />
+    <set href="#text" attributeName="font-size" to="58" />
+    <set href="#text" attributeName="y" to="68" />
   </use>
-  <use id="btn_save" href="#square-button" y="100%-75" fill="fb-green">
-    <set href="#text" attributeName="text-buffer" to="Save" />
+  <use id="btn_save" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
+    <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_play_p.png"/>
+    <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_play_press_p.png"/>
+    <set href="combo-button-stroke" attributeName="display" to="inline"/>
   </use>
 </svg>
 <svg id="back_weight" display="none">
-  <use id="tumbler_kg_1" href="#tumblerview" x="0" y="50%-68" fill="fb-slate">
+  <use id="tumbler_kg_1" href="#tumblerview" x="0" y="50%-74" fill="fb-lavender">
     <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
@@ -95,7 +100,7 @@
     <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
   </use>
   <text id="tumbler_label_kg_1">.</text>
-  <use id="tumbler_kg_2" href="#tumblerview" x="50%+30" y="50%-68" fill="fb-slate">
+  <use id="tumbler_kg_2" href="#tumblerview" x="50%+25" y="50%-74" fill="fb-lavender">
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">0</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">1</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">2</text></use>
@@ -108,14 +113,14 @@
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">9</text></use>
   </use>
   <text id="tumbler_label_kg_2">lbs</text>
-  <use id="btn_weight_submit" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
+  <use id="btn_weight_submit" href="#combo-button-lower-right" fill="fb-slate" shortcut="none">
     <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_check_p.png"/>
     <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_check_press_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>
   </use>
 </svg>
 <svg id="back_fat" display="none">
-  <use id="tumbler_fat_1" href="#tumblerview" x="0" y="50%-68" fill="fb-slate">
+  <use id="tumbler_fat_1" href="#tumblerview" x="0" y="50%-74" fill="fb-lavender">
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">5</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">6</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">7</text></use>
@@ -164,7 +169,7 @@
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">50</text></use>
   </use>
   <text id="tumbler_label_fat_1">.</text>
-  <use id="tumbler_fat_2" href="#tumblerview" x="50%+30" y="50%-68" fill="fb-slate">
+  <use id="tumbler_fat_2" href="#tumblerview" x="50%+5" y="50%-74" fill="fb-lavender">
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">0</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">1</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">2</text></use>
@@ -178,11 +183,11 @@
   </use>
   <text id="tumbler_label_fat_2">%</text>
   <use id="btn_fat_clear" href="#combo-button-upper-right" fill="fb-peach" shortcut="none">
-    <set href="combo-button-icon" attributeName="href" to="icons/sqr_btn_minus_p.png"/>
-    <set href="combo-button-icon-press" attributeName="href" to="icons/sqr_btn_minus_p.png"/>
+    <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_reset_p.png"/>
+    <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_reset_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>
   </use>
-  <use id="btn_fat_submit" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
+  <use id="btn_fat_submit" href="#combo-button-lower-right" fill="fb-slate" shortcut="none">
     <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_check_p.png"/>
     <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_check_press_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>

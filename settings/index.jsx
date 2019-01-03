@@ -5,7 +5,7 @@ import * as secrets from "../secrets";
 const generateSettings = props => (
   <Page>
     <Text>Note: Please restart the app after changing settings.</Text>
-    <Section title={<Text>Fitbit Login</Text>}>
+    <Section title="Fitbit Login">
       <Oauth
         settingsKey="oauth"
         title="Login"
