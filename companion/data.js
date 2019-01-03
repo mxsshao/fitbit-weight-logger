@@ -5,8 +5,7 @@ import { debug } from "../common/log.js";
 import Fitbit from "./fitbit";
 import { sendVal } from "./communication"
 
-const fetchAndSendWeight = () => {
-
+export function fetchAndSendWeight() {
   let unit_setting = settingsStorage.getItem("unit");
   let unit = (unit_setting ? JSON.parse(unit_setting).values[0].value : "metric");
 
@@ -24,7 +23,7 @@ const fetchAndSendWeight = () => {
   });
 };
 
-const getFitbitInstance = (unit) => {
+export function getFitbitInstance(unit) {
   let oauthData = settingsStorage.getItem("oauth");
 
   if (!oauthData) {
@@ -43,7 +42,7 @@ const getFitbitInstance = (unit) => {
   return new Fitbit(oauthDataParsed, unit);
 };
 
-const postWeightTodayAndSendResponseToApp = value => {
+export function postWeightTodayAndSendResponseToApp(value) {
 
   let unit = (value.unit ? value.unit : "metric" );
 
@@ -65,10 +64,4 @@ const postWeightTodayAndSendResponseToApp = value => {
       }
     });
   }
-};
-
-export {
-  getFitbitInstance,
-  fetchAndSendWeight,
-  postWeightTodayAndSendResponseToApp
 };
