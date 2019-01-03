@@ -1,40 +1,30 @@
 import * as messaging from "messaging";
 import { settingsStorage } from "settings";
-
 import { debug, error } from "../common/log.js";
+import { fetchAndSendWeight, postWeightTodayAndSendResponseToApp } from "./data";
 
-import {
-  fetchAndSendWeight,
-  postWeightTodayAndSendResponseToApp
-} from "./data";
-
-
-messaging.peerSocket.onopen = () => {
+messaging.peerSocket.onopen = function() {
   debug("Companion Socket Open");
   fetchAndSendWeight();
 };
 
 // Message socket closes
-messaging.peerSocket.onclose = () => {
+messaging.peerSocket.onclose = function() {
   debug("Companion Socket Closed");
 };
 
 // Message is received
-messaging.peerSocket.onmessage = evt => {
-  if (evt.data.key === "WEIGHT_LOGGED_TODAY") {
-    postWeightTodayAndSendResponseToApp(evt.data.value);
+messaging.peerSocket.onmessage = function(e) {
+  if (e.data.key === "WEIGHT_LOGGED_TODAY") {
+    postWeightTodayAndSendResponseToApp(e.data.value);
   }
 };
 
 // Problem with message socket
-messaging.peerSocket.onerror = err => {
-  error("Connection error: " + err.code + " - " + err.message);
+messaging.peerSocket.onerror = function(e) {
+  error("Connection error: " + e.code + " - " + e.message);
 };
 
-settingsStorage.onchange = evt => {
-  debug(`Settings changed: ${JSON.stringify(evt)}`);
-
-  // if (evt.key === "oauth") {
-  //   fetchAndSendWeight();
-  // }
+settingsStorage.onchange = function(e) {
+  debug(`Settings changed: ${JSON.stringify(e)}`);
 };
