@@ -38,6 +38,9 @@ const generateSettings = props => (
          selectViewTitle="Choose a unit"
         />
     </Section>
+    <Section title="About">
+       <Text>Placeholder</Text>
+    </Section>
   </Page>
 );
 
