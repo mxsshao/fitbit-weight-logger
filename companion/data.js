@@ -1,7 +1,5 @@
 import { settingsStorage } from "settings";
-
 import { debug } from "../common/log.js";
-
 import Fitbit from "./fitbit";
 import { sendVal } from "./communication"
 
@@ -43,9 +41,7 @@ export function getFitbitInstance(unit) {
 };
 
 export function postWeightTodayAndSendResponseToApp(value) {
-
   let unit = (value.unit ? value.unit : "metric" );
-
   let fitbit = getFitbitInstance(unit);
 
   if (value.weight) {

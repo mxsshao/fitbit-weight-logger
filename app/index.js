@@ -1,10 +1,8 @@
 import document from "document";
-import { preferences } from "user-settings";
 import * as messaging from "messaging";
 import { debug, error } from "../common/log.js";
 import { getMonthName } from "../common/utils.js";
 import { me } from "appbit";
-import {sendVal} from "./communication"
 
 const back_main = document.getElementById("back_main");
 const label_last_recorded = document.getElementById("label_last_recorded");
@@ -43,6 +41,18 @@ let new_weight, new_body_fat, new_weight_lower_bound;
 
 let unit, unit_text = "";
 
+function sendVal(data) {
+    if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+        try {
+            messaging.peerSocket.send(data);
+            debug(`Sent to companion: ${JSON.stringify(data)}`);
+        } catch (err) {
+            screenError("Connection Failed", "Please check the connection to your phone.");
+        }
+    } else {
+        screenError("Connection Failed", "Please check the connection to your phone.");
+    }
+};
 function screenLoader() {
     state = "LOADER";
 
