@@ -6,7 +6,7 @@ import { b64EncodeUnicode } from "../common/base64.js";
 import { updateOauthSettings } from "./comp_settings";
 import { sendVal } from "./communication";
 
-import { debug } from "../common/log.js";
+import { debug, error } from "../common/log.js";
 
 const URL_BASE = "https://api.fitbit.com/1";
 const LOGGED_IN_USER = "-";
@@ -159,8 +159,6 @@ class Fitbit {
               debug("Token expired - refreshing");
 
               return this.refreshTokens().then(data => {
-                debug("Token refreshed");
-
                 if (this.retries < MAX_RETRIES) {
                   debug(
                     `Retrying original request, try ${this.retries +
@@ -173,7 +171,10 @@ class Fitbit {
                 } else {
                   sendVal({
                     key: "ERROR",
-                    message: "Too many retries"
+                    value: {
+                      "header": "Connection Error",
+                      "text": "Unable to retrieve weight data."
+                    }
                   });
 
                   return null;
@@ -186,7 +187,10 @@ class Fitbit {
         if (response.status >= 400) {
           sendVal({
             key: "ERROR",
-            message: `Error ${response.status} in response`
+            value: {
+              "header": "Connection Error",
+              "text": "Unable to retrieve weight data."
+            }
           });
 
           return null;
@@ -197,24 +201,29 @@ class Fitbit {
       })
       .catch(err => {
         error(err);
+        sendVal({
+          key: "ERROR",
+          value: {
+            "header": "Connection Error",
+            "text": "Unable to retrieve weight data."
+          }
+        });
       });
   }
 
   refreshTokens() {
-    const url = secrets.REQUESTURL;
-    const username = secrets.CLIENTID;
-    const password = secrets.CLIENTSECRET;
-    const b64Auth = "Basic " + b64EncodeUnicode(`${username}:${password}`);
-    const refresh_token = this.oauthData.refresh_token;
-    const formBody = `grant_type=refresh_token&refresh_token=${refresh_token}`;
+    debug(JSON.stringify(this.oauthData));
+
+    let refresh_token = this.oauthData.refresh_token;
+    let formBody = `grant_type=refresh_token&refresh_token=${refresh_token}`;
 
     debug("Refresh Oauth token");
 
-    return fetch(url, {
+    return fetch(secrets.REQUESTURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: b64Auth
+        "Authorization": secrets.AUTHHEADER
       },
       body: formBody
     })
@@ -237,17 +246,13 @@ class Fitbit {
 
         if (response.status === 200) {
           this.oauthData = response.body;
-          updateOauthSettings(response.body);
+          settingsStorage.setItem("oauth", JSON.stringify(response.body));
           debug("New tokens saved in instance and settings");
         }
 
         return response;
       });
   }
-}
-
-function updateOauthSettings(oauthData) {
-  settingsStorage.setItem("oauth", JSON.stringify(oauthData));
 }
 
 export default Fitbit;

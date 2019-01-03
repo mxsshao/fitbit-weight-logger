@@ -29,6 +29,13 @@ const getFitbitInstance = (unit) => {
 
   if (!oauthData) {
     debug("No Oauth data found");
+    sendVal({
+      key: "ERROR",
+      value: {
+        "header": "Not Logged In",
+        "text": "Go to settings to login to your fitbit account."
+      }
+    });
     return null;
   }
 

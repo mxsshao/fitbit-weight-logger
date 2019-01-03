@@ -34,6 +34,9 @@ const back_loader = document.getElementById("back_loader");
 const loader_spinner = document.getElementById("loader_spinner");
 const loader_text = document.getElementById("loader_text");
 
+const back_error = document.getElementById("back_error");
+const btn_error = document.getElementById("btn_error");
+
 let weight, body_fat;
 let state = "";
 let new_weight, new_body_fat, new_weight_lower_bound;
@@ -60,6 +63,22 @@ function screenSubmit() {
     loader_spinner.state = "enabled";
 
     back_loader.style.display = "inline";
+    back_log.style.display = "none";
+    back_weight.style.display = "none";
+    back_fat.style.display = "none";
+    back_main.style.display = "none";
+    debug(state);
+}
+function screenError(title, message) {
+    state = "ERROR";
+
+    loader_spinner.state = "disabled";
+
+    document.getElementById("header").text = title;
+    document.getElementById("copy").text = message;
+
+    back_error.style.display = "inline";
+    back_loader.style.display = "none";
     back_log.style.display = "none";
     back_weight.style.display = "none";
     back_fat.style.display = "none";
@@ -182,8 +201,8 @@ function submitLog() {
     sendVal({
         key: "WEIGHT_LOGGED_TODAY",
         value: {
-            "weight": new_weight,
-            "body_fat": new_body_fat,
+            "weight": new_weight.toFixed(1),
+            "body_fat": new_body_fat.toFixed(1),
             "unit": unit
         }
     });
@@ -210,10 +229,13 @@ btn_fat_submit.onclick = function(e) {
 btn_fat_clear.onclick = function(e) {
     setClearFat();
 };
+btn_error.onclick = function(e) {
+    me.exit();
+};
 document.onkeypress = function(e) {
     e.preventDefault();
     if (e.key === "back") {
-        if (state === "MAIN") {
+        if (state === "MAIN" || state === "LOADER" || state === "SUBMIT" || state === "ERROR") {
             me.exit();
         } else if (state === "LOG") {
             screenMain();
@@ -288,13 +310,18 @@ function updateMainText() {
 }
 messaging.peerSocket.onmessage = evt => {
     debug(`App received: ${JSON.stringify(evt)}`);
-    if (evt.data.key === "LATEST_ENTRY") {
+    if (evt.data.key === "LATEST_ENTRY" && state === "LOADER") {
         receiveValues(evt.data);
         screenMain();
-    } else if (evt.data.key === "LOG_RESPONSE") {
+    } else if (evt.data.key === "LOG_RESPONSE" && state === "SUBMIT") {
         receiveValues(evt.data);
         screenMain();
+    } else if (evt.data.key === "ERROR") {
+        screenError(evt.data.value.header, evt.data.value.text);
     }
+}
+messaging.peerSocket.onerror = function(e) {
+    screenError("Connection Failed", "Please check the connection to your phone.");
 }
 function updateUnit(new_unit) {
     unit = new_unit;
