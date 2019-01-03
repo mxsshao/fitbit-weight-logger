@@ -1,11 +1,7 @@
 import * as secrets from "../secrets";
 
 import { getDateString } from "../common/utils.js";
-import { b64EncodeUnicode } from "../common/base64.js";
-
-import { updateOauthSettings } from "./comp_settings";
 import { sendVal } from "./communication";
-
 import { debug, error } from "../common/log.js";
 
 const URL_BASE = "https://api.fitbit.com/1";
