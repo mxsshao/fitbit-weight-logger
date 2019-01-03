@@ -3,6 +3,7 @@ import * as secrets from "../secrets";
 import { getDateString } from "../common/utils.js";
 import { sendVal } from "./communication";
 import { debug, error } from "../common/log.js";
+import { settingsStorage } from "settings";
 
 const URL_BASE = "https://api.fitbit.com/1";
 const LOGGED_IN_USER = "-";
@@ -139,17 +140,9 @@ class Fitbit {
         });
       })
       .then(response => {
-        debug(
-          `Response: ${response.status} ${JSON.stringify(
-            response.body,
-            undefined,
-            2
-          )}`
-        );
-
-        if (response.status === 401) {
-          for (const i = 0; i < response.body.errors.length; i++) {
-            const element = response.body.errors[i];
+        if (response.status == 401) {
+          for (let i = 0; i < response.body.errors.length; i++) {
+            let element = response.body.errors[i];
 
             if (element.errorType === "expired_token") {
               debug("Token expired - refreshing");
@@ -163,7 +156,11 @@ class Fitbit {
 
                   this.retries++;
 
-                  return this.getUrl(url);
+                  if (method === "POST") {
+                    return this.postUrl(url, options.body);
+                  } else {
+                    return this.getUrl(url);
+                  }
                 } else {
                   sendVal({
                     key: "ERROR",
@@ -172,7 +169,7 @@ class Fitbit {
                       "text": "Unable to retrieve weight data."
                     }
                   });
-
+                  this.retries = 0;
                   return null;
                 }
               });
@@ -188,7 +185,7 @@ class Fitbit {
               "text": "Unable to retrieve weight data."
             }
           });
-
+          this.retries = 0;
           return null;
         }
 
@@ -208,8 +205,6 @@ class Fitbit {
   }
 
   refreshTokens() {
-    debug(JSON.stringify(this.oauthData));
-
     let refresh_token = this.oauthData.refresh_token;
     let formBody = `grant_type=refresh_token&refresh_token=${refresh_token}`;
 
@@ -240,7 +235,7 @@ class Fitbit {
           )}`
         );
 
-        if (response.status === 200) {
+        if (response.status == 200) {
           this.oauthData = response.body;
           settingsStorage.setItem("oauth", JSON.stringify(response.body));
           debug("New tokens saved in instance and settings");
