@@ -24,9 +24,17 @@ const sortEntriesByDate = entries => {
 };
 
 class Fitbit {
-  constructor(oauthData) {
+  constructor(oauthData, unit) {
     this.oauthData = oauthData;
     this.retries = 0;
+    this.unit = unit;
+    if (unit === "metric") {
+      this.acceptLanguageHeader = "metric";
+    } else if (unit === "us") {
+      this.acceptLanguageHeader = "en_US";
+    } else {
+      this.acceptLanguageHeader = "metric";
+    }
   }
 
   getWeightToday() {
@@ -53,21 +61,26 @@ class Fitbit {
   getLastEntry() {
     return this.getLastSevenDays().then(entriesLastSevenDays => {
       if (!entriesLastSevenDays) {
-        return null;
+        return {
+          "unit": this.unit
+        };
       }
 
       let sortedEntries = sortEntriesByDate(entriesLastSevenDays.weight);
       debug(JSON.stringify(sortedEntries))
-      if (sortedEntries.length > 0) {
-        let weight = sortedEntries[0];
+      // if (sortedEntries.length > 0) {
+      //   let weight = sortedEntries[0];
 
-        return {
-          "date": weight.date,
-          "weight": weight.weight,
-          "body_fat": weight.fat
-        };
-      }
-      return null;
+      //   return {
+      //     "date": weight.date,
+      //     "weight": weight.weight,
+      //     "body_fat": weight.fat,
+      //     "unit": this.unit
+      //   };
+      // }
+      return {
+        "unit": this.unit
+      };
     });
   }
 
@@ -97,6 +110,7 @@ class Fitbit {
     const headers = {
       Authorization: `${tokenType} ${accessToken}`,
       "Content-Type": contentType,
+      "Accept-Language": this.acceptLanguageHeader
     };
 
     const options = {

@@ -1,98 +1,98 @@
 <svg id="background">
 <svg id="back_main">
-<textarea id="label_last_recorded" x="0" y="20"
-        font-family="System-Regular" fill="white"
+<textarea id="label_last_recorded" x="0" y="10"
+        font-family="System-Regular" fill="fb-slate"
         font-size="30" font-weight="bold"
         text-anchor="middle" text-length="30">Last Recorded:</textarea>
 
-        <text id="label_weight" x="50%" y="120"
+        <text id="label_weight" x="50%" y="50%-9"
         font-family="System-Regular" fill="white"
-        font-size="40" font-weight="bold"
-        text-anchor="middle" text-length="9"></text>
-        <text id="label_fat" x="50%" y="160"
+        font-size="42" font-weight="bold"
+        text-anchor="middle" text-length="10"></text>
+        <text id="label_fat" x="50%" y="50%+37"
         font-family="System-Regular" fill="white"
-        font-size="40" font-weight="bold"
-        text-anchor="middle" text-length="9"></text>
-  <use id="btn_log" href="#square-button" y="225" fill="fb-slate">
+        font-size="42" font-weight="bold"
+        text-anchor="middle" text-length="10"></text>
+  <use id="btn_log" href="#square-button" y="100%-75" fill="fb-slate">
     <set href="#text" attributeName="text-buffer" to="Log Weight" />
   </use>
 </svg>
 <svg id="back_log" display="none">
-  <text x="50%" y="46" font-family="System-Regular" fill="white"
-          font-size="40" font-weight="bold"
-          text-anchor="middle" text-length="30">New Entry</text>
-  <use id="btn_new_weight" href="#square-button" x="50" y="66" width="200" fill="#505050">
-    <set href="#text" attributeName="text-length" to="9" />
+  <use id="btn_new_weight" href="#square-button" x="50%-120" y="50%-110" width="240" height="80" fill="#505050">
+    <set href="#text" attributeName="text-length" to="10" />
+    <set href="#text" attributeName="font-size" to="50" />
   </use>
-  <use id="btn_new_fat" href="#square-button" x="50" y="136" width="200" fill="#505050">
-    <set href="#text" attributeName="text-length" to="9" />
+  <use id="btn_new_fat" href="#square-button" x="50%-120" y="50%-30" width="240" height="80" fill="#505050">
+    <set href="#text" attributeName="text-length" to="10" />
+    <set href="#text" attributeName="font-size" to="50" />
   </use>
-  <use id="btn_save" href="#square-button" y="225" fill="fb-green">
+  <use id="btn_save" href="#square-button" y="100%-75" fill="fb-green">
     <set href="#text" attributeName="text-buffer" to="Save" />
   </use>
 </svg>
 <svg id="back_weight" display="none">
   <use id="tumbler_kg_1" href="#tumblerview" x="0" y="50%-68" fill="fb-slate">
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">40</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">41</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">42</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">43</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">44</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">45</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">46</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">47</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">48</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">49</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">50</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">51</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">52</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">53</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">54</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">55</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">56</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">57</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">58</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">59</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">60</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">61</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">62</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">63</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">64</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">65</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">66</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">67</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">68</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">69</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">70</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">71</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">72</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">73</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">74</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">75</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">76</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">77</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">78</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">79</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">80</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">81</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">82</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">83</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">84</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">85</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">86</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">87</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">88</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">89</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">90</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">91</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">92</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">93</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">94</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">95</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">96</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">97</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">98</text></use>
-    <use href="#tumbler-item"><text class="tumbler_item_kg_1">99</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_kg_1">---</text></use>
   </use>
   <text id="tumbler_label_kg_1">.</text>
   <use id="tumbler_kg_2" href="#tumblerview" x="50%+30" y="50%-68" fill="fb-slate">
@@ -107,8 +107,8 @@
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">8</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">9</text></use>
   </use>
-  <text id="tumbler_label_kg_2">kg</text>
-  <use id="btn_weight_submit" href="#combo-button-lower-right" fill="fb-green">
+  <text id="tumbler_label_kg_2">lbs</text>
+  <use id="btn_weight_submit" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
     <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_check_p.png"/>
     <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_check_press_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>
@@ -116,7 +116,6 @@
 </svg>
 <svg id="back_fat" display="none">
   <use id="tumbler_fat_1" href="#tumblerview" x="0" y="50%-68" fill="fb-slate">
-    <use href="#tumbler-item"><text class="tumbler_item_fat_1">4</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">5</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">6</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">7</text></use>
@@ -157,6 +156,12 @@
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">42</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">43</text></use>
     <use href="#tumbler-item"><text class="tumbler_item_fat_1">44</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">45</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">46</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">47</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">48</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">49</text></use>
+    <use href="#tumbler-item"><text class="tumbler_item_fat_1">50</text></use>
   </use>
   <text id="tumbler_label_fat_1">.</text>
   <use id="tumbler_fat_2" href="#tumblerview" x="50%+30" y="50%-68" fill="fb-slate">
@@ -172,12 +177,12 @@
     <use href="#tumbler-item"><text class="tumbler_item_kg_2">9</text></use>
   </use>
   <text id="tumbler_label_fat_2">%</text>
-  <use id="btn_fat_clear" href="#combo-button-upper-right" fill="fb-peach">
+  <use id="btn_fat_clear" href="#combo-button-upper-right" fill="fb-peach" shortcut="none">
     <set href="combo-button-icon" attributeName="href" to="icons/sqr_btn_minus_p.png"/>
     <set href="combo-button-icon-press" attributeName="href" to="icons/sqr_btn_minus_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>
   </use>
-  <use id="btn_fat_submit" href="#combo-button-lower-right" fill="fb-green">
+  <use id="btn_fat_submit" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
     <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_check_p.png"/>
     <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_check_press_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>

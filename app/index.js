@@ -18,8 +18,10 @@ const btn_new_fat = document.getElementById("btn_new_fat");
 const btn_save = document.getElementById("btn_save");
 
 const back_weight = document.getElementById("back_weight");
+const tumbler_items_kg = document.getElementsByClassName("tumbler_item_kg_1");
 const tumbler_kg_1 = document.getElementById("tumbler_kg_1");
 const tumbler_kg_2 = document.getElementById("tumbler_kg_2");
+const tumbler_label_kg_2 = document.getElementById("tumbler_label_kg_2");
 const btn_weight_submit = document.getElementById("btn_weight_submit");
 
 const back_fat = document.getElementById("back_fat");
@@ -30,26 +32,9 @@ const btn_fat_clear = document.getElementById("btn_fat_clear");
 
 let weight, body_fat;
 let state = "MAIN";
-let new_weight, new_body_fat;
+let new_weight, new_body_fat, new_weight_lower_bound;
 
-messaging.peerSocket.onmessage = evt => {
-    debug(`App received: ${JSON.stringify(evt)}`);
-    if (evt.data.key === "LATEST_ENTRY") {
-        let date = new Date(evt.data.value.date);
-        let text_date = date.getDate() + " " + getMonthName(date.getMonth()) + " " + date.getFullYear();
-        debug(text_date);
-        label_last_recorded.text = `Last Recorded:\n${text_date}`;
-        weight = evt.data.value.weight;
-        label_weight.text = `${weight} kg`;
-        if (evt.data.value.body_fat) {
-            body_fat = evt.data.value.body_fat;
-            label_fat.text = `${body_fat}% fat`;
-        } else {
-            body_fat = null;
-            label_fat.text = `--% fat`;
-        }
-    }
-}
+let unit, unit_text;
 
 function screenMain() {
     state = "MAIN"
@@ -68,14 +53,21 @@ function screenLog(reset) {
         new_body_fat = body_fat;
     }
 
-    if (new_weight) {
-        btn_new_weight.text = `${new_weight} kg`;
-    } else {
-        btn_new_weight.text = `-- kg`;
+    if (new_weight == null) {
+        new_weight = (unit === "us" ? 150 : 70 );
+    }
+    btn_new_weight.text = `${new_weight.toFixed(1)} ${unit_text}`;
+    new_weight_lower_bound = Math.floor(new_weight) - 30;
+    if (new_weight_lower_bound < 0) {
+        new_weight_lower_bound = 0;
     }
 
-    if (new_body_fat) {
-        btn_new_fat.text = `${new_body_fat}% fat`;
+    for (let i = 0; i < tumbler_items_kg.length; i++) {
+        tumbler_items_kg[i].text = new_weight_lower_bound + i;
+    }
+
+    if (new_body_fat != null) {
+        btn_new_fat.text = `${new_body_fat.toFixed(1)}% fat`;
     } else {
         btn_new_fat.text = `--% fat`;
     }
@@ -90,22 +82,18 @@ function screenLog(reset) {
 function screenWeight() {
     state = "LOG_WEIGHT";
     let new_weight_1, new_weight_2;
-    if (new_weight) {
-        new_weight_1 = Math.floor(new_weight) - 40;
-        new_weight_2 = Math.round((new_weight % 1) * 10);
-        if (new_weight_2 === 10) {
-            new_weight_1 += 1;
-            new_weight_2 = 0;
-        }
-        if (new_weight_1 > 59) {
-            new_weight_1 = 59;
-        }
-    } else {
-        new_weight_1 = 60;
+    new_weight_1 = Math.floor(new_weight) - new_weight_lower_bound;
+    new_weight_2 = Math.round((new_weight % 1) * 10);
+    if (new_weight_2 === 10) {
+        new_weight_1 += 1;
         new_weight_2 = 0;
+    }
+    if (new_weight_1 > 59) {
+        new_weight_1 = 59;
     }
     tumbler_kg_1.value = new_weight_1;
     tumbler_kg_2.value = new_weight_2;
+
     back_main.style.display = "none";
     back_log.style.display = "none";
     back_fat.style.display = "none";
@@ -116,22 +104,23 @@ function screenWeight() {
 function screenFat() {
     state = "LOG_FAT";
     let new_body_fat_1, new_body_fat_2;
-    if (new_body_fat) {
-        new_body_fat_1 = Math.floor(new_body_fat) - 4;
+    if (new_body_fat != null) {
+        new_body_fat_1 = Math.floor(new_body_fat) - 5;
         new_body_fat_2 = Math.round((new_body_fat % 1) * 10);
         if (new_body_fat_2 === 10) {
             new_body_fat_1 += 1;
             new_body_fat_2 = 0;
         }
-        if (new_body_fat_1 > 40) {
-            new_body_fat_1 = 40;
+        if (new_body_fat_1 > 46) {
+            new_body_fat_1 = 45;
         }
     } else {
-        new_body_fat_1 = 16;
+        new_body_fat_1 = 11;
         new_body_fat_2 = 0;
     }
     tumbler_fat_1.value = new_body_fat_1;
     tumbler_fat_2.value = new_body_fat_2;
+
     back_main.style.display = "none";
     back_log.style.display = "none";
     back_weight.style.display = "none";
@@ -140,48 +129,51 @@ function screenFat() {
 }
 
 function setNewWeight() {
-    new_weight = tumbler_kg_1.value + 40 + tumbler_kg_2.value * 0.1;
+    new_weight = tumbler_kg_1.value + new_weight_lower_bound + tumbler_kg_2.value / 10;
     screenLog(false);
 };
 function setNewFat() {
-    new_body_fat = tumbler_fat_1.value + 40 + tumbler_fat_2.value * 0.1;
+    new_body_fat = tumbler_fat_1.value + 5 + tumbler_fat_2.value / 10;
     screenLog(false);
 };
 function setClearFat() {
     new_body_fat = null;
     screenLog(false);
 };
-btn_log.addEventListener("click", () => {
-    screenLog(true);
-});
-btn_save.addEventListener("click", () => {
+function submitLog() {
     sendVal({
         key: "WEIGHT_LOGGED_TODAY",
         value: {
             "weight": new_weight,
-            "body_fat": new_body_fat
+            "body_fat": new_body_fat,
+            "unit": unit
         }
     });
-});
-btn_new_weight.addEventListener("click", () => {
+}
+btn_log.onclick = function(e) {
+    screenLog(true);
+};
+btn_save.onclick = function(e) {
+    submitLog()
+};
+btn_new_weight.onclick = function(e) {
     screenWeight();
-});
-btn_new_fat.addEventListener("click", () => {
+};
+btn_new_fat.onclick = function(e) {
     screenFat();
-});
-btn_weight_submit.addEventListener("click", () => {
+};
+btn_weight_submit.onclick = function(e) {
     setNewWeight();
-});
-btn_fat_submit.addEventListener("click", () => {
+};
+btn_fat_submit.onclick = function(e) {
     setNewFat();
-});
-btn_fat_clear.addEventListener("click", () => {
+};
+btn_fat_clear.onclick = function(e) {
     setClearFat();
-});
-document.addEventListener("keypress", (evt) => {
-    evt.preventDefault();
-    debug(JSON.stringify(evt));
-    if (evt.key === "back") {
+};
+document.onkeypress = function(e) {
+    e.preventDefault();
+    if (e.key === "back") {
         if (state === "MAIN") {
             me.exit();
         } else if (state === "LOG") {
@@ -191,15 +183,73 @@ document.addEventListener("keypress", (evt) => {
         } else if (state === "LOG_FAT") {
             setNewFat();
         }
-    } else if (evt.key === "down") {
+    } else if (e.key === "down") {
         if (state === "LOG_WEIGHT") {
+            btn_weight_submit.animate("mouseup");
             setNewWeight();
         } else if (state === "LOG_FAT") {
+            btn_fat_submit.animate("mouseup");
             setNewFat();
         }
-    } else if (evt.key === "up") {
+    } else if (e.key === "up") {
         if (state === "LOG_FAT") {
+            btn_fat_clear.animate("mouseup");
             setClearFat();
         }
     }
-});
+};
+document.onkeydown = function(e) {
+    e.preventDefault();
+    if (e.key === "down") {
+        if (state === "LOG_WEIGHT") {
+            btn_weight_submit.animate("mousedown");
+        } else if (state === "LOG_FAT") {
+            btn_fat_submit.animate("mousedown");
+        }
+    } else if (e.key === "up") {
+        if (state === "LOG_FAT") {
+            btn_fat_clear.animate("mousedown");
+        }
+    }
+}
+function receiveValues(data) {
+    if (data.value.date) {
+        let date = new Date(data.value.date);
+        let text_date = date.getDate() + " " + getMonthName(date.getMonth()) + " " + date.getFullYear();
+
+        label_last_recorded.text = `Last Recorded:\n${text_date}`;
+        weight = data.value.weight;
+        body_fat = data.value.body_fat;
+        
+        updateUnit(evt.data.value.unit);
+    } else {
+        label_last_recorded.text = `No Recent\nEntries Found`;
+        weight = null;
+        body_fat = null;
+    }
+    updateUnit(data.value.unit);
+    updateMainText();
+}
+function updateMainText() {
+    if (weight != null) {
+        label_weight.text = `${weight.toFixed(1)} ${unit_text}`;
+    } else {
+        label_weight.text = `-- ${unit_text}`;
+    }
+    if (body_fat != null) {
+        label_fat.text = `${body_fat.toFixed(1)}% fat`;
+    } else {
+        label_fat.text = `--% fat`;
+    }
+}
+messaging.peerSocket.onmessage = evt => {
+    debug(`App received: ${JSON.stringify(evt)}`);
+    if (evt.data.key === "LATEST_ENTRY") {
+        receiveValues(evt.data);
+    }
+}
+function updateUnit(new_unit) {
+    unit = new_unit;
+    unit_text = (unit === "us" ? "lbs" : "kg" );
+    tumbler_label_kg_2.text = unit_text;
+}

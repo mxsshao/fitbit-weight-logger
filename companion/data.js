@@ -6,23 +6,25 @@ import Fitbit from "./fitbit";
 import { sendVal } from "./communication"
 
 const fetchAndSendWeight = () => {
-  let fitbit = getFitbitInstance();
+
+  let unit_setting = settingsStorage.getItem("unit");
+  let unit = (unit_setting ? JSON.parse(unit_setting).values[0].value : "metric");
+
+  let fitbit = getFitbitInstance(unit);
 
   if (!fitbit) {
     return;
   }
 
   fitbit.getLastEntry().then(lastEntry => {
-    if (lastEntry) {
-      sendVal({
-        key: "LATEST_ENTRY",
-        value: lastEntry
-      });
-    }
+    sendVal({
+      key: "LATEST_ENTRY",
+      value: lastEntry
+    });
   });
 };
 
-const getFitbitInstance = () => {
+const getFitbitInstance = (unit) => {
   let oauthData = settingsStorage.getItem("oauth");
 
   if (!oauthData) {
@@ -31,11 +33,14 @@ const getFitbitInstance = () => {
   }
 
   let oauthDataParsed = JSON.parse(oauthData);
-  return new Fitbit(oauthDataParsed);
+  return new Fitbit(oauthDataParsed, unit);
 };
 
 const postWeightTodayAndSendResponseToApp = value => {
-  let fitbit = getFitbitInstance();
+
+  let unit = (value.unit ? value.unit : "metric" );
+
+  let fitbit = getFitbitInstance(unit);
 
   if (value.weight) {
     fitbit.postWeightToday(value).then(response_weight => {
@@ -46,7 +51,8 @@ const postWeightTodayAndSendResponseToApp = value => {
           value: {
             "date": log.date,
             "weight": log.weight,
-            "body_fat": log.fat
+            "body_fat": log.fat,
+            "unit": unit
           }
         });
       }

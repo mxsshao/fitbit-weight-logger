@@ -4,7 +4,8 @@ import * as secrets from "../secrets";
 
 const generateSettings = props => (
   <Page>
-    <Section title={<Text>Log in with your Fitbit account</Text>}>
+    <Text>Note: Please restart the app after changing settings.</Text>
+    <Section title={<Text>Fitbit Login</Text>}>
       <Oauth
         settingsKey="oauth"
         title="Login"
@@ -25,6 +26,17 @@ const generateSettings = props => (
           debug(data);
         }}
       />
+    </Section>
+    <Section title="Weight Unit">
+       <Select
+         label="Unit"
+         settingsKey="unit"
+         options={[
+          {name: "kg", value: "metric"},
+          {name: "lbs", value: "us"}
+         ]}
+         selectViewTitle="Choose a unit"
+        />
     </Section>
   </Page>
 );
