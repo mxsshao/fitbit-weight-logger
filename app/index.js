@@ -30,21 +30,54 @@ const tumbler_fat_2 = document.getElementById("tumbler_fat_2");
 const btn_fat_submit = document.getElementById("btn_fat_submit");
 const btn_fat_clear = document.getElementById("btn_fat_clear");
 
+const back_loader = document.getElementById("back_loader");
+const loader_spinner = document.getElementById("loader_spinner");
+const loader_text = document.getElementById("loader_text");
+
 let weight, body_fat;
-let state = "MAIN";
+let state = "";
 let new_weight, new_body_fat, new_weight_lower_bound;
 
 let unit, unit_text = "";
 
+function screenLoader() {
+    state = "LOADER";
+
+    loader_text.text = "Getting Weight Data"
+    loader_spinner.state = "enabled";
+
+    back_loader.style.display = "inline";
+    back_log.style.display = "none";
+    back_weight.style.display = "none";
+    back_fat.style.display = "none";
+    back_main.style.display = "none";
+    debug(state);
+}
+function screenSubmit() {
+    state = "SUBMIT";
+
+    loader_text.text = "Sending Weight Data"
+    loader_spinner.state = "enabled";
+
+    back_loader.style.display = "inline";
+    back_log.style.display = "none";
+    back_weight.style.display = "none";
+    back_fat.style.display = "none";
+    back_main.style.display = "none";
+    debug(state);
+}
 function screenMain() {
-    state = "MAIN"
+    state = "MAIN";
+
+    loader_spinner.state = "disabled";
+
+    back_loader.style.display = "none";
     back_log.style.display = "none";
     back_weight.style.display = "none";
     back_fat.style.display = "none";
     back_main.style.display = "inline";
     debug(state);
 }
-
 function screenLog(reset) {
     state = "LOG"
 
@@ -54,15 +87,6 @@ function screenLog(reset) {
             new_weight = (unit === "us" ? 150 : 70 );
         }
         new_body_fat = body_fat;
-
-        new_weight_lower_bound = Math.floor(new_weight) - 30;
-        if (new_weight_lower_bound < 0) {
-            new_weight_lower_bound = 0;
-        }
-
-        for (let i = 0; i < tumbler_items_kg.length; i++) {
-            tumbler_items_kg[i].text = new_weight_lower_bound + i;
-        }
     }
 
     btn_new_weight.text = `${new_weight.toFixed(1)} ${unit_text}`;
@@ -73,6 +97,7 @@ function screenLog(reset) {
         btn_new_fat.text = `--% fat`;
     }
 
+    back_loader.style.display = "none";
     back_main.style.display = "none";
     back_weight.style.display = "none";
     back_fat.style.display = "none";
@@ -82,6 +107,16 @@ function screenLog(reset) {
 
 function screenWeight() {
     state = "LOG_WEIGHT";
+
+    new_weight_lower_bound = Math.floor(new_weight) - 30;
+    if (new_weight_lower_bound < 0) {
+        new_weight_lower_bound = 0;
+    }
+
+    for (let i = 0; i < tumbler_items_kg.length; i++) {
+        tumbler_items_kg[i].text = new_weight_lower_bound + i;
+    }
+
     let new_weight_1, new_weight_2;
     new_weight_1 = Math.floor(new_weight) - new_weight_lower_bound;
     new_weight_2 = Math.round((new_weight % 1) * 10);
@@ -95,6 +130,7 @@ function screenWeight() {
     tumbler_kg_1.value = new_weight_1;
     tumbler_kg_2.value = new_weight_2;
 
+    back_loader.style.display = "none";
     back_main.style.display = "none";
     back_log.style.display = "none";
     back_fat.style.display = "none";
@@ -122,6 +158,7 @@ function screenFat() {
     tumbler_fat_1.value = new_body_fat_1;
     tumbler_fat_2.value = new_body_fat_2;
 
+    back_loader.style.display = "none";
     back_main.style.display = "none";
     back_log.style.display = "none";
     back_weight.style.display = "none";
@@ -150,6 +187,7 @@ function submitLog() {
             "unit": unit
         }
     });
+    screenSubmit();
 }
 btn_log.onclick = function(e) {
     screenLog(true);
@@ -252,8 +290,10 @@ messaging.peerSocket.onmessage = evt => {
     debug(`App received: ${JSON.stringify(evt)}`);
     if (evt.data.key === "LATEST_ENTRY") {
         receiveValues(evt.data);
+        screenMain();
     } else if (evt.data.key === "LOG_RESPONSE") {
         receiveValues(evt.data);
+        screenMain();
     }
 }
 function updateUnit(new_unit) {
@@ -261,3 +301,6 @@ function updateUnit(new_unit) {
     unit_text = (unit === "us" ? "lbs" : "kg" );
     tumbler_label_kg_2.text = unit_text;
 }
+
+
+screenLoader();

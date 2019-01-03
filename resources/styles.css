@@ -15,14 +15,14 @@
   font-size: 100;
   font-family: System-Light;
   text-anchor: end;
-  x: "50%+5";
+  x: 50%+5;
 }
 #tumbler_label_kg_1 {
   fill: fb-lavender;
   font-size: 100;
   font-family: System-Light;
-  y: "50%+38";
-  x: "50%+15";
+  y: 50%+38;
+  x: 50%+15;
   text-anchor: middle;
 }
 #tumbler_label_kg_2 {
@@ -30,8 +30,8 @@
   font-size: 50;
   font-family: System-Light;
   text-length: 3;
-  y: "50%+38";
-  x: "50%+80";
+  y: 50%+38;
+  x: 50%+80;
   text-anchor: start;
 }
 .tumbler_item_kg_2 {
@@ -43,25 +43,42 @@
   font-size: 100;
   font-family: System-Light;
   text-anchor: end;
-  x: "50%-15";
+  x: 50%-15;
 }
 #tumbler_label_fat_1 {
   fill: fb-lavender;
   font-size: 100;
   font-family: System-Light;
-  y: "50%+38";
-  x: "50%-5";
+  y: 50%+38;
+  x: 50%-5;
   text-anchor: middle;
 }
 #tumbler_label_fat_2 {
   fill: fb-lavender;
   font-size: 50;
   font-family: System-Light;
-  y: "50%+38";
-  x: "50%+60";
+  y: 50%+38;
+  x: 50%+60;
   text-anchor: start;
 }
 .tumbler_item_fat_2 {
   font-size: 100;
   font-family: System-Light;
+}
+
+#loader_spinner {
+  x: 50%-25;
+  y: 50%-40;
+  width: 50;
+  height: 50;
+  fill: fb-white;
+}
+
+#loader_text{
+  x: 50%;
+  y: 50%+45;
+  font-size: 30;
+  text-length: 30;
+  text-anchor: middle;
+  fill: fb-lavender;
 }

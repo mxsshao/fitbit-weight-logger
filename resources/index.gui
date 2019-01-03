@@ -1,5 +1,5 @@
 <svg id="background">
-<svg id="back_main">
+<svg id="back_main" display="none">
 <textarea id="label_last_recorded" x="0" y="10"
         font-family="System-Regular" fill="fb-lavender"
         font-size="30" font-weight="bold"
@@ -192,5 +192,9 @@
     <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_check_press_p.png"/>
     <set href="combo-button-stroke" attributeName="display" to="inline"/>
   </use>
+</svg>
+<svg id="back_loader">
+  <use id="loader_spinner" href="#spinner"/>
+  <text id="loader_text">Loading</text>
 </svg>
 </svg>
