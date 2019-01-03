@@ -5,6 +5,16 @@ An app to log today's weight and body fat to your Fitbit profile.
 + Requires your device to be connected to your phone and an active internet connection.
 + Supports kg and lbs.
 
+## Screenshots
+
+### Versa
+
+<img src="screenshots/versa_main.png" width="200px" /> <img src="screenshots/versa_log.png" width="200px" /> <img src="screenshots/versa_log_weight.png" width="200px" /> <img src="screenshots/versa_log_fat.png" width="200px" /> <img src="screenshots/versa_lbs.png" width="200px" />
+
+### Ionic
+
+<img src="screenshots/ionic_main.png" width="200px" /> <img src="screenshots/ionic_log.png" width="200px" /> <img src="screenshots/ionic_log_weight.png" width="200px" /> <img src="screenshots/ionic_log_fat.png" width="200px" /> <img src="screenshots/ionic_lbs.png" width="200px" />
+
 ## Development
 
 ```javascript
