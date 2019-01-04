@@ -1,5 +1,5 @@
 const debug = text => {
-    console.log(text);
+    //console.log(text);
 };
 
 const error = text => {
